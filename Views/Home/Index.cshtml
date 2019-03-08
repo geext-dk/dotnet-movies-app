@@ -12,6 +12,9 @@
                              + '&criterion=' + filter_opt
                              + '&sortOption=' + sort_opt);
     });
+    $('#sort-opt').change(function() {
+      $('#start-search').click();
+    });
     $('#filter-opts option').on('click', function() {
       $(this).attr('selected', true);
     })

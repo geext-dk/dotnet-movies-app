@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Film>
+@{
+  ViewData["active"] = 0;
+}
+<script>
+  $(function() {
+    $('#start-search').on('click', function() {
+      var search_string = $('#input-filter').val();
+      var filter_opt = $('#filter-opts').val();
+      var sort_opt = $('#sort-opt').val();
+      $('#partial-dest').load('/Home/PartialGet?searchString=' + search_string
+                             + '&criterion=' + filter_opt
+                             + '&sortOption=' + sort_opt);
+    });
+    $('#filter-opts option').on('click', function() {
+      $(this).attr('selected', true);
+    })
+  });
+  $(document).ready(function() {
+    $('#start-search').click();
+  })
+</script>
+<div class="container-fluid bgr-color">
+  <div class="container search-film">
+    <h1 style="padding-bottom:30px">Список фильмов</h1>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="input-group" id="adv-search">
+            <input id="input-filter" type="text" class="form-control" placeholder="Введите фильм или ключевые слова..." />
+            <div class="input-group-btn">
+              <div class="btn-group" role="group">
+                <div class="dropdown dropdown-lg">
+                  <button type="button" class="btn btn-default btn-outline-info" data-toggle="dropdown" aria-expanded="false"><span class="caret">Фильтр &#9661;</span></button>
+                  <div class="dropdown-menu dropdown-menu-right" role="menu">
+                    <div class="form-group">
+                      <label for="filter">Фильтровать фильмы по</label>
+                      <select id="filter-opts" required class="form-control">
+                        <option value="0">Названию</option>
+                        <option value="1">Режиссёру</option>
+                        <option value="2">Актёру</option>
+                        <option value="3">Году</option>
+                        <option value="4">Жанру</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <button id="start-search" type="button" class="btn btn-info"><span class="glyphicon glyphicon-search" aria-hidden="false">Найти</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container film-con">
+  <div class="container" style="padding-bottom:10px;">
+    <p style="text-align:right;margin-bottom:5px;">Сортировать: 
+      <div class="tab-pane active" style="text-align:right;" id="sort">
+        <form>
+          <div class="controls controls-row">
+            <select id="sort-opt">
+              <option value="0">По названию</option>
+              <option value="1">По дате выхода</option>
+            </select>
+          </div>
+        </form>
+      </div>
+    </p>
+  </div>
+  <div id="partial-dest">
+  </div>
+</div>

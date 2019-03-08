@@ -1,0 +1,55 @@
+﻿<!doctype html>
+<html lang="ru">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/style.css">
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+
+    <title>Фильмы</title>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a href="#" class="navbar-brand"><img src="#" width="30" height="30" alt="logo"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item @(((int)ViewData["active"]) == 0 ? "active" : "")">
+            <a asp-controller="Home" asp-action="Index" class="nav-link">Фильмы</a>
+          </li>
+          @if (User.Identity.IsAuthenticated)
+          {
+            <li class="nav-item @(((int)ViewData["active"]) == 1 ? "active" : "")">
+              <a asp-controller="User" asp-action="Profile" class="nav-link">@User.Identity.Name</a>
+            </li>
+            <li class="nav-item">
+              <form method="post" id="logout_form" asp-controller="Account" asp-action="Logout">
+               <a onclick="document.getElementById('logout_form').submit();" class="nav-link">Выход</a>  
+              </form>
+            </li>
+          }
+          else
+          {
+            <li class="nav-item @(((int)ViewData["active"]) == 1 ? "active" : "")">
+              <a asp-controller="Account" asp-action="Login" class="nav-link">Вход</a>
+            </li>
+            <li class="nav-item @(((int)ViewData["active"]) == 2 ? "active" : "")">
+              <a asp-controller="Account" asp-action="Register" class="nav-link">Регистрация</a>
+            </li>
+          }
+        </ul>
+      </div>
+    </nav>
+    @RenderBody()
+  </body>
+</html>

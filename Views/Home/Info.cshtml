@@ -1,0 +1,90 @@
+@model MoviesApp.ViewModels.AddReviewModel
+@inject DatabaseContext db
+@{
+    ViewData["Title"] = Model.Title;
+    ViewData["active"] = 0;
+    User currentUser = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+    Film film = db.Films.First(f => f.FilmId == Model.FilmId);
+}
+<div class="container film-con film-desc-con">
+  <div class="row">
+    <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+      <img src="@film.PosterPath" alt="" class="w-100" />
+    </div>
+    <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+      <h3>@Model.Title</h3>
+      <p class="film-type">Год: @film.ReleaseYear</p>
+      <p class="film-type">Жанр: @film.stringGenre()</p>
+      <p class="film-type">Режиссеры: @film.stringDirectors()</p>
+      <p class="film-type">Актеры: @film.stringActors()</p>
+    </div>
+    <div class="col-5 col-sm-5 col-md-5 col-lg-5">
+      <h3>Описание</h3>
+      <p class="film-type">@film.Description</p>
+    </div>
+  </div>
+  <div style="padding-top:50px;padding-left:20px;">
+    @if (currentUser?.Favorites.Find(f => f.FilmId == film.FilmId) == null)
+    {
+      <form method="post">
+        <button type="submit" asp-controller="User" asp-action="FavoritesAdd" asp-route-filmId="@film.FilmId" class="btn btn-outline-info my-2 my-sm-0">Добавить в избранное</button>
+      </form>
+    }
+    else
+    {
+      <form method="post">
+        <button type="submit" asp-controller="User" asp-action="FavoritesRemove" asp-route-filmId="@film.FilmId" class="btn btn-outline-info my-2 my-sm-0">Убрать из избранного</button>
+      </form>
+    }
+  </div>
+</div>
+<div class="container rev-con">
+  <h3 style="text-align:center"> </h3>
+</div>
+<div class="container film-con">
+  <div class="col">
+    <h3>Рецензии</h3>
+      @if (currentUser != null)
+      {
+        <br>
+        <div>
+          <button type="button" class="btn btn-info btn-block btn-view">Добавить рецензию</button>
+          <div class="container rev-add" style="display: none">
+            <form method="post">
+              <input asp-for="FilmId" type="hidden" value="@film.FilmId">
+              <label asp-for="Title" style="text-align: center;padding-top:20px;">Заголовок:</label>
+              <input asp-for="Title" class="form-control" type="text" placeholder="Введите заголовок">
+              <label asp-for="Body" style="text-align: center;padding-top:20px;">Текст рецензии:</label>
+              <textarea asp-for="Body" class="form-control" rows="5" id="comment"></textarea>
+              <div style="text-align: right;padding-right:20px;padding-top:20px;">
+                <button type="submit" asp-controller="User" asp-action="ReviewsAdd" class="btn btn-info btn-md">Отправить</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      }
+      <br>
+    <div class="row">
+      @if (film.FilmReviews.Any())
+      {
+        @foreach (FilmReview fr in film.FilmReviews)
+        {
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="container rev-bg">
+            <h5>@fr.Title</h5>
+            <p><a asp-controller="User" asp-action="Profile" asp-route-id="@fr.UserId">@fr.User.Email</a></p>
+            <p>@fr.Body</p>
+          </div>
+        </div>
+        <br>
+        }
+      }
+      else
+      {
+        <p>Рецензии к данному фильму отсутствуют</p>
+      }
+    </div>
+  </div>
+</div>
+</div>
+

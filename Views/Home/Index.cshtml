@@ -4,23 +4,22 @@
 }
 <script>
   $(function() {
-    $('#start-search').on('click', function() {
+    $('#search-form').submit(function(e) {
+      e.preventDefault();
+
       var search_string = $('#input-filter').val();
       var filter_opt = $('#filter-opts').val();
       var sort_opt = $('#sort-opt').val();
       $('#partial-dest').load('/Home/PartialGet?searchString=' + search_string
-                             + '&criterion=' + filter_opt
-                             + '&sortOption=' + sort_opt);
+                              + '&criterion=' + filter_opt
+                              + '&sortOption=' + sort_opt);
     });
     $('#sort-opt').change(function() {
-      $('#start-search').click();
+      $('#search-form').submit();
     });
-    $('#filter-opts option').on('click', function() {
-      $(this).attr('selected', true);
-    })
   });
   $(document).ready(function() {
-    $('#start-search').click();
+    $('#search-form').submit();
   })
 </script>
 <div class="container-fluid bgr-color">
@@ -29,29 +28,21 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <div class="input-group" id="adv-search">
+          <form id="search-form" class="input-group" id="adv-search">
             <input id="input-filter" type="text" class="form-control" placeholder="Введите фильм или ключевые слова..." />
             <div class="input-group-btn">
               <div class="btn-group" role="group">
-                <div class="dropdown dropdown-lg">
-                  <button type="button" class="btn btn-default btn-outline-info" data-toggle="dropdown" aria-expanded="false"><span class="caret">Фильтр &#9661;</span></button>
-                  <div class="dropdown-menu dropdown-menu-right" role="menu">
-                    <div class="form-group">
-                      <label for="filter">Фильтровать фильмы по</label>
-                      <select id="filter-opts" required class="form-control">
-                        <option value="0">Названию</option>
-                        <option value="1">Режиссёру</option>
-                        <option value="2">Актёру</option>
-                        <option value="3">Году</option>
-                        <option value="4">Жанру</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <button id="start-search" type="button" class="btn btn-info"><span class="glyphicon glyphicon-search" aria-hidden="false">Найти</span></button>
+                <select id="filter-opts" required class="form-control">
+                  <option value="0">По названию</option>
+                  <option value="1">По режиссёру</option>
+                  <option value="2">По актёру</option>
+                  <option value="3">По году</option>
+                  <option value="4">По жанру</option>
+                </select>
+                <button id="start-search" type="submit" class="btn btn-info"><span class="glyphicon glyphicon-search" aria-hidden="false">Найти</span></button>
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
@@ -59,11 +50,11 @@
 </div>
 <div class="container film-con">
   <div class="container" style="padding-bottom:10px;">
-    <p style="text-align:right;margin-bottom:5px;">Сортировать: 
+    <p style="margin-bottom:5px;">Сортировать: 
       <div class="tab-pane active" style="text-align:right;" id="sort">
         <form>
           <div class="controls controls-row">
-            <select id="sort-opt">
+            <select id="sort-opt" class="form-control col-3">
               <option value="0">По названию</option>
               <option value="1">По дате выхода</option>
             </select>

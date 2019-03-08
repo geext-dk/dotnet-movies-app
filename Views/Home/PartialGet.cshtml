@@ -1,11 +1,18 @@
 @model IEnumerable<Film>
     
 <div class="row">
-@foreach (Film film in Model)
+@if (Model.Any())
 {
-  <div class="col-6 col-sm-3 col-md-2 col-lg-2"><a asp-controller="Home" asp-action="Info" asp-route-id="@film.FilmId"><img src="@film.PosterPath" alt="" class="w-100" />
-    <h6>@film.Title</h6></a>
-    <p class="film-type">@film.stringGenre() (@film.ReleaseYear)</p>
-  </div>
+  @foreach (Film film in Model)
+  {
+    <div class="col-6 col-sm-3 col-md-2 col-lg-2"><a asp-controller="Home" asp-action="Info" asp-route-id="@film.FilmId"><img src="@film.PosterPath" alt="" class="w-100" />
+      <h6>@film.Title</h6></a>
+      <p class="film-type">@film.stringGenre() (@film.ReleaseYear)</p>
+    </div>
+  }
+}
+else
+{
+  <p>Фильмы не найдены</p>
 }
 </div>

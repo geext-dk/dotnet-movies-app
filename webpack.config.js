@@ -1,11 +1,15 @@
 const path = require('path');
 
 module.exports = {
-  entry: './Assets/main.js',
+  entry: {
+		main: './Assets/main.js'
+	},
   output: {
     filename: './bundle.js',
-    path: path.resolve(__dirname, 'wwwroot')
-  },
+		path: path.resolve(__dirname, 'wwwroot'),
+		publicPath: '/'
+	},
+	mode: "development",
   module: {
     rules: [
       {

@@ -100,5 +100,14 @@ namespace MoviesApp.Controllers
             }
             return RedirectToAction("Info", "Home", new { id = model.FilmId });
         }
+
+        [HttpPost]
+        public IActionResult ReviewsRemove(int filmReviewId)
+        {
+            User currentUser = db.Users.First(u => u.UserName == User.Identity.Name);
+            db.FilmReviews.Remove(db.FilmReviews.Single(fr => fr.FilmReviewId == filmReviewId));
+            db.SaveChanges();
+            return RedirectToAction("Profile", "User");
+        }
     }
 }

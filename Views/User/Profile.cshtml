@@ -35,7 +35,7 @@
             <div class="container review-pr"><p>Рецензия на <a asp-controller="Home" asp-action="Info" asp-route-id="@f.FilmId" class="film-link">@f.Title</a></p></div>
             <p>@review.Title</p>
             <p>@review.Body</p>
-            <form method="post" asp-controller="User" asp-action="ReviewRemove">
+            <form method="post" asp-controller="User" asp-action="ReviewsRemove" asp-route-filmReviewId="@review.FilmReviewId">
               <input type="submit" class="btn text-right" value="Удалить" />
             </form>
           </div>

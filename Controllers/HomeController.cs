@@ -130,12 +130,18 @@ namespace MoviesApp.Controllers
             {
                 ret.AddRange(db.Films.ToList());
             }
-            if (sortOption == 0)
-            {
-                return PartialView(ret.OrderBy(f => f.Title));
-            }
             
-            return PartialView(ret.OrderBy(f => f.ReleaseYear));
+            if (sortOption == 1)
+            {
+                return PartialView(ret.OrderByDescending(f => f.ReleaseYear));
+            }
+            else if (sortOption == 2)
+            {
+                return PartialView(ret.OrderBy(f => f.ReleaseYear));
+            }
+
+            return PartialView(ret.OrderBy(f => f.Title));
+            
         }
 
     }

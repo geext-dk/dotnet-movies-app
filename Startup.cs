@@ -34,7 +34,7 @@ namespace MoviesApp
             
             // setup database
             string defaultConnection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(defaultConnection));
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlite(defaultConnection));
 
             services.Configure<CookiePolicyOptions>(options =>
             {

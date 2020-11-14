@@ -186,3 +186,7 @@ a.film-link:active {
   color: #4682B4;
   font-weight:bold;
 }
+
+#logout-link:hover {
+    cursor: pointer;
+}

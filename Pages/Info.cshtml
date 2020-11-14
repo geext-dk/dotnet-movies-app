@@ -1,0 +1,98 @@
+﻿@page
+@model DotnetMoviesAppRazor.Pages.InfoModel
+@{
+    ViewData["Title"] = Model.Film.Title;
+    ViewData["Active"] = 0;
+}
+<div class="container film-con film-desc-con">
+    <div class="row">
+        <div class="col-3 col-sm-3 col-md-3 col-lg-3">
+            <img src="@Model.Film.PosterPath" alt="" class="w-100" />
+        </div>
+        <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+            <h3>@Model.Film.Title</h3>
+            <p class="film-type">Year: @Model.Film.ReleaseYear</p>
+            <p class="film-type">Genre: @Model.Film.Genre</p>
+            <p class="film-type">Directors: @string.Join(", ", Model.Film.Directors)</p>
+            <p class="film-type">Actors: @string.Join(", ", Model.Film.Actors)</p>
+        </div>
+        <div class="col-5 col-sm-5 col-md-5 col-lg-5">
+            <h3>Description</h3>
+            <p class="film-type">@Model.Film.Description</p>
+        </div>
+    </div>
+    <div style="padding-top:50px;padding-left:20px;">
+        @if (Model.CurrentUser != null)
+        {
+            @if (!Model.CurrentUser.FavouriteFilmIds.Contains(Model.Film.Id))
+            {
+                <form method="post">
+                    <input name="filmId" type="hidden" value="@Model.Film.Id">
+                    <button type="submit" asp-page-handler="AddFavourite" class="btn btn-outline-info my-2 my-sm-0">
+                        Add to favourites
+                    </button>
+                </form>
+            }
+            else
+            {
+                <form method="post">
+                    <input name="filmId" type="hidden" value="@Model.Film.Id">
+                    <button type="submit" asp-page-handler="RemoveFavourite"
+                            class="btn btn-outline-info my-2 my-sm-0">
+                        Remove from favourites
+                    </button>
+                </form>
+            }
+        }
+    </div>
+</div>
+<div class="container rev-con">
+    <h3 style="text-align:center"> </h3>
+</div>
+<div class="container film-con">
+    <div class="col">
+        <h3>Reviews</h3>
+        @if (Model.CurrentUser != null)
+        {
+            <br>
+            <div>
+                <button type="button" class="btn btn-info btn-block btn-view">Add a review</button>
+                <div class="container rev-add" style="display: none">
+                    <form method="post">
+                        <input name="FilmId" type="hidden" value="@Model.Film.Id">
+                        <label style="text-align: center;padding-top:20px;">Title:</label>
+                        <input name="Title" class="form-control" type="text" placeholder="Type a title">
+                        <label style="text-align: center;padding-top:20px;">Content:</label>
+                        <textarea name="Body" class="form-control" rows="5" id="comment"></textarea>
+                        <div style="text-align: right;padding-right:20px;padding-top:20px;">
+                            <button type="submit" asp-page-handler="CreateReview" class="btn btn-info btn-md">
+                                Create
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+        <br>
+        <div class="row">
+            @if (Model.Film.Reviews.Any())
+            {
+                @foreach (var review in Model.Film.Reviews)
+                {
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="container rev-bg">
+                            <h5>@review.Title</h5>
+                            <p><a href='@Url.Page("/User/Profile", new {userId = review.Author.Id})'>@review.Author.Email</a></p>
+                            <p>@review.Body</p>
+                        </div>
+                    </div>
+                    <br>
+                }
+            }
+            else
+            {
+                <p>The film has no reviews</p>
+            }
+        </div>
+    </div>
+</div>

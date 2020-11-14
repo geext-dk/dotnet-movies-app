@@ -1,0 +1,54 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <script src="~/bundle.js"></script>
+    <title>Films</title>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a href="#" class="navbar-brand"><i class="fas fa-film"></i></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item @(((int)ViewData["active"]) == 0 ? "active" : "")">
+                    <a href='@Url.Page("/Index")' class="nav-link">Films</a>
+                </li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item @(((int)ViewData["active"]) == 1 ? "active" : "")">
+                        <a href='@Url.Page("/User/Profile")' class="nav-link">@User.Identity.Name</a>
+                    </li>
+                    <li class="nav-item">
+                        <form method="post" id="logout_form" asp-controller="Account" asp-action="Logout">
+                            <a id="logout-link" onclick="document.getElementById('logout_form').submit();"
+                                class="nav-link">Log out</a>
+                        </form>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item @(((int)ViewData["active"]) == 1 ? "active" : "")">
+                        <a asp-page="/Account/Login" class="nav-link">Log in</a>
+                    </li>
+                    <li class="nav-item @(((int)ViewData["active"]) == 2 ? "active" : "")">
+                        <a asp-page="/Account/Register" class="nav-link">Register</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </nav>
+    @RenderBody()
+</body>
+
+</html>

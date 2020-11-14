@@ -11,26 +11,27 @@
         "url": "https://gitlab.com/geext/dotnet-movies-app.git"
     },
     "devDependencies": {
-        "@types/autoprefixer": "^9.4.0",
-        "@types/bootstrap": "^4.3.0",
-        "@types/jquery": "^3.3.29",
+        "@types/autoprefixer": "^9.7.2",
+        "@types/bootstrap": "^5.0.0",
+        "@types/jquery": "^3.5.4",
         "aspnet-webpack": "^3.0.0",
-        "autoprefixer": "^9.4.10",
-        "bootstrap": "^4.3.1",
-        "css-loader": "^2.1.1",
-        "jquery": "^3.3.1",
-        "node-sass": "^4.11.0",
+        "autoprefixer": "^10.0.2",
+        "bootstrap": "^4.5.3",
+        "css-loader": "^5.0.1",
+        "jquery": "^3.5.1",
+        "node-sass": "^5.0.0",
         "popper.js": "^1.14.7",
-        "postcss-loader": "^3.0.0",
+        "postcss-loader": "^4.0.4",
         "precss": "^4.0.0",
-        "sass-loader": "^7.1.0",
-        "style-loader": "^0.23.1",
-        "webpack": "^4.29.6",
-        "webpack-cli": "^3.2.3",
-        "webpack-dev-middleware": "^3.6.1",
-        "webpack-hot-middleware": "^2.24.3"
+        "sass-loader": "^10.1.0",
+        "style-loader": "^2.0.0",
+        "webpack": "^5.4.0",
+        "webpack-cli": "^4.2.0"
     },
     "scripts": {
         "build": "webpack"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.15.1"
     }
 }
